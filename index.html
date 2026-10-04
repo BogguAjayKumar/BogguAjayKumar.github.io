@@ -109,8 +109,30 @@ header.top nav a:hover { color: var(--ink); }
 
 h1 {
   font: 800 clamp(2.4rem, 5.5vw, 3.8rem)/1.08 "Bricolage Grotesque", sans-serif;
-  margin: 0 0 1.2rem;
+  margin: 0 0 0.8rem;
   letter-spacing: -0.03em;
+}
+
+.typing-container {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--accent);
+  min-height: 2.8rem;
+  margin-bottom: 1.2rem;
+  display: flex;
+  align-items: center;
+}
+.typing-cursor {
+  display: inline-block;
+  color: var(--warn);
+  font-weight: 400;
+  margin-left: 2px;
+  animation: blinkCursor 0.8s infinite;
+}
+@keyframes blinkCursor {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
 }
 
 h2 {
@@ -127,7 +149,7 @@ h2::after { content: ""; flex: 1; height: 1px; background: var(--line); }
   max-width: 34rem;
   color: var(--mute);
   margin: 0 0 1.75rem;
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   line-height: 1.7;
 }
 
@@ -337,6 +359,9 @@ footer {
   <div>
     <span class="badge-tag">KG Reddy College (2024–2028)</span>
     <h1>Boggu Ajay Kumar</h1>
+    <div class="typing-container">
+      <span id="typingElement">Hi, I'm Ajay 👋</span><span class="typing-cursor">|</span>
+    </div>
     <p class="lead">B.Tech 3rd year student exploring Cybersecurity, Linux Internals, and Networking from the ground up. Passionate about system architecture, shell scripting, and security engineering.</p>
     <div class="hero-actions">
       <a class="btn btn-primary" href="https://github.com/BogguAjayKumar" target="_blank" rel="noopener">
@@ -401,7 +426,7 @@ footer {
         <h3>Rock Paper Scissors Game</h3>
         <p>Interactive command-line Python application demonstrating foundational programming concepts, conditional logic, and random state management.</p>
       </div>
-      <a class="card-link" href="https://github.com/BogguAjayKumar/first_project" target="_blank" rel="noopener">View Repository →</a>
+      <a class="card-link" href="https://github.com/BogguAjayKumar/rock-paper-scissors-python" target="_blank" rel="noopener">View Repository →</a>
     </div>
 
   </div>
@@ -461,6 +486,18 @@ footer {
         <a href="https://www.linkedin.com/in/bajaykumar-10cyber20" target="_blank" rel="noopener">linkedin.com/in/bajaykumar-10cyber20</a>
       </div>
 
+      <!-- X / TWITTER LINK -->
+      <div class="contact-item">
+        <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        <a href="https://x.com/ajay_k20" target="_blank" rel="noopener">x.com/ajay_k20</a>
+      </div>
+
+      <!-- DEV COMMUNITY LINK -->
+      <div class="contact-item">
+        <svg viewBox="0 0 24 24"><path d="M7.42 10.05c-.18-.16-.46-.23-.84-.23H5.32v4.36h1.26c.38 0 .66-.08.84-.24.18-.16.27-.42.27-.78v-2.33c0-.36-.09-.62-.27-.78zm14.33-6.05H2.25C1.01 4 0 5.01 0 6.25v11.5C0 18.99 1.01 20 2.25 20h19.5c1.24 0 2.25-1.01 2.25-2.25V6.25C24 5.01 22.99 4 21.75 4zm-12.7 10.74c-.45.45-1.12.67-2.01.67H4.32V8.59h2.72c.89 0 1.56.22 2.01.67.45.45.68 1.1.68 1.95v1.23c0 .85-.23 1.5-.68 1.95zm5.7-4.9c0 .73-.39 1.15-1.17 1.27.78.12 1.17.54 1.17 1.27v1.85h-1.05v-1.85c0-.42-.23-.63-.69-.63h-.69v2.48h-1.05V8.59h1.74c.46 0 .69-.21.69-.63V8.59zM20 12.83h-2.12v.9h2.12v.97h-3.17V8.59H20v.97h-2.12v.9H20v1.37z"/></svg>
+        <a href="https://dev.to/bogguajaykumar" target="_blank" rel="noopener">dev.to/bogguajaykumar</a>
+      </div>
+
       <!-- EMAIL LINK PLACEHOLDER -->
       <div class="contact-item">
         <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
@@ -479,6 +516,7 @@ footer {
 
 <script>
 (function(){
+  // Theme Toggle
   var themeToggle = document.getElementById('themeToggle');
   var currentTheme = localStorage.getItem('theme') || 'dark';
   if(currentTheme === 'light') document.documentElement.setAttribute('data-theme', 'light');
@@ -494,17 +532,57 @@ footer {
     }
   });
 
+  // Linux Boot Animation
   var rows = document.querySelectorAll('#boot div:not(.boot-header)');
-  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  rows.forEach(function(r){ r.style.visibility = 'hidden'; });
-  var i = 0;
-  (function next(){
-    if(i < rows.length) {
-      rows[i].style.visibility = 'visible';
-      i++;
-      setTimeout(next, i < rows.length ? 400 : 0);
+  if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    rows.forEach(function(r){ r.style.visibility = 'hidden'; });
+    var i = 0;
+    (function next(){
+      if(i < rows.length) {
+        rows[i].style.visibility = 'visible';
+        i++;
+        setTimeout(next, i < rows.length ? 400 : 0);
+      }
+    })();
+  }
+
+  // Typewriter Loop: 5s interval cycle (Intro -> Career -> Status -> Goal)
+  var phrases = [
+    "Hi, I'm Ajay 👋",
+    "Cybersecurity & Systems Engineering 🛡️",
+    "B.Tech 3rd Year @ KG Reddy College (2024–2028) 🎓",
+    "Goal: Build a career in Cyber Security & Linux Defense 🚀"
+  ];
+  var phraseIdx = 0;
+  var charIdx = phrases[0].length;
+  var isDeleting = false;
+  var el = document.getElementById('typingElement');
+
+  function typeLoop() {
+    var currentPhrase = phrases[phraseIdx];
+    if (isDeleting) {
+      el.textContent = currentPhrase.substring(0, charIdx - 1);
+      charIdx--;
+    } else {
+      el.textContent = currentPhrase.substring(0, charIdx + 1);
+      charIdx++;
     }
-  })();
+
+    var typeSpeed = isDeleting ? 25 : 55;
+
+    if (!isDeleting && charIdx === currentPhrase.length) {
+      typeSpeed = 3200; // Pause at end of sentence
+      isDeleting = true;
+    } else if (isDeleting && charIdx === 0) {
+      isDeleting = false;
+      phraseIdx = (phraseIdx + 1) % phrases.length;
+      typeSpeed = 400;
+    }
+
+    setTimeout(typeLoop, typeSpeed);
+  }
+  setTimeout(typeLoop, 2500);
+
 })();
 </script>
 </body>
