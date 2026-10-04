@@ -570,7 +570,7 @@ footer {
     var typeSpeed = isDeleting ? 25 : 55;
 
     if (!isDeleting && charIdx === currentPhrase.length) {
-      typeSpeed = 3200; // Pause at end of sentence
+      typeSpeed = 2200; // Pause duration (~4 sec total cycle per phrase)
       isDeleting = true;
     } else if (isDeleting && charIdx === 0) {
       isDeleting = false;
